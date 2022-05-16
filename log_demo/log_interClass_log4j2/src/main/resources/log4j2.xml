@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+status 默认的输出级别
+monitorinterval 自动刷新配置的时间 最少不要少于5s  默认是5s 单位是s
+-->
+<Configuration status="INFO" monitorinterval="5">
+    <Properties>
+        <Property name="pattern">log4j2---->%d{yyyy-MM-dd HH:ss:mm}-[%thread]-%msg%n</Property>
+        <Property name="fileName">log4j2.log</Property>
+        <Property name="filePath">D://softstoreFile/logs</Property>
+        <Property name="filePathName">${filePath}/${fileName}</Property>
+    </Properties>
+
+
+    <Appenders>
+        <!--
+            name取一个名字 给这个appender取个名字
+            target 使用的那种控制台输出格式 SYSTEM_OUT 或 SYSTEM_ERR
+        -->
+        <Console name="console" target="SYSTEM_ERR">
+            <!-- 临界值拦截器 当前这个类型或者这个类型以上的日志会是true -->
+            <!--log4j2 好像只有这个拦截器-->
+            <!--<ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>-->
+
+            <PatternLayout pattern="${pattern}"/>
+        </Console>
+
+        <!--文件输出-->
+        <!--
+            name取一个名字 给这个appender取个名字
+            fileName 文件名
+            append 是否追加 false为覆盖原有文件
+        -->
+       <!-- <File name="file" fileName="${filePathName}" append="true">
+            <PatternLayout pattern="${pattern}"/>
+        </File>-->
+
+        <!--
+            日志文件管理
+            name取一个名字 给这个appender取个名字
+            filePattern 文件管理的名称 %d{日期格式化}====>日期 %i====>递增数字超过文件大小限制
+            .gz后缀 会压缩日志
+        -->
+        <RollingFile name="rollingFile" filePattern="${filePath}/%d{yyyy-MM-dd}/log4j2-%i.log.gz">
+            <PatternLayout pattern="${pattern}"/>
+
+            <!--启用的 政策-->
+            <Policies>
+                <!--时间限制-->
+                <TimeBasedTriggeringPolicy/>
+                <!--文件大小限制-->
+                <SizeBasedTriggeringPolicy size="1MB"/>
+            </Policies>
+
+            <!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件，这里设置了20 -->
+            <!--<DefaultRolloverStrategy max="20"/>-->
+        </RollingFile>
+
+
+        <!--
+            异步appender 性能和logback异步差不多
+            使用ArrayBlockQueen队列存储日志任务
+            存在锁竞争 效率也就那么回事
+        -->
+        <!--<Async name="AsyncAppender">
+            <AppenderRef ref="rollingFile"/>
+        </Async>-->
+    </Appenders>
+
+    <!--Loggers标签设置所有的Logger 通用使用Root 细粒度使用Logger-->
+    <Loggers>
+        <Root>
+            <!--<AppenderRef ref="console"/>-->
+        </Root>
+        <!--
+            name 那些类前缀
+            level 控制的输出类型这个类型及其之上的类型
+            additivity 是否继承父类设置 true 是
+        -->
+        <Logger name="cn.chen" level="ALL" additivity="false">
+            <AppenderRef ref="console"/>
+            <!--6s85 100000个日志输出-->
+            <!--<AppenderRef ref="AsyncAppender"/>-->
+
+            <!--6s479 100000个日志输出-->
+            <!--<AppenderRef ref="rollingFile"/>-->
+        </Logger>
+
+        <!--2s971 100000个日志输出-->
+        <!--
+            name 那些类前缀
+            使用一种环形队列 使用cas锁机制(乐观锁)
+            性能相对会高
+        -->
+        <AsyncLogger name="cn.chen" level="ALL" additivity="false">
+            <AppenderRef ref="rollingFile"/>
+        </AsyncLogger>
+
+
+
+    </Loggers>
+
+</Configuration>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>log_demo</artifactId>
+        <groupId>cn.chen</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>log_interface_slf4j</artifactId>
+
+    <dependencies>
+        <!--slf4j门面依赖-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.32</version>
+        </dependency>
+
+
+
+        <!--log4j2连接slf4j-->
+        <dependency>
+            <groupId>cn.chen</groupId>
+            <artifactId>log_interClass_log4j2</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.12.1</version>
+        </dependency>
+
+
+
+        <!--logback连接slf4j-->
+        <!--<dependency>
+            <groupId>cn.chen</groupId>
+            <artifactId>log_class_logback</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>-->
+
+        <!--log4j连接slf4j-->
+        <!--<dependency>
+            <groupId>cn.chen</groupId>
+            <artifactId>log_class_log4j</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.30</version>
+        </dependency>-->
+
+        <!--jul连接slf4j-->
+        <!--<dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <version>1.7.12</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.chen</groupId>
+            <artifactId>log_class_jul</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>-->
+
+        <!--空实现也就是没有实现 不打印 有这个啥都不好使 -->
+        <!--<dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-nop</artifactId>
+            <version>1.7.32</version>
+        </dependency>-->
+
+    </dependencies>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
+
+</project>

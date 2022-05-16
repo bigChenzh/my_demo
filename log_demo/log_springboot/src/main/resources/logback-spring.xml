@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+scan        xml发生更改重新扫描配置类
+scanPeriod  扫描间隔
+debug       是否打印内部日志
+-->
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <!--设置上下文名称-->
+    <contextName>logbackDemo</contextName>
+
+    <!--申明变量 使用${dirStr}来使用-->
+    <property name="diyStr" value="logbackDemo"/>
+    <!--当前时间 key取个名字 datePattern格式要求 用${dateNow}使用-->
+    <timestamp key="dateNow" datePattern="yyyy-MM-dd HH:mm:ss"/>
+
+    <property name="myPattern" value="[logback]-${dateNow}-%msg-[%p]-[%logger]%n"/>
+    <property name="logDir" value="D://softstoreFile/logs"/>
+
+    <!--
+        name        给这个appender命名 自定义的
+        class       使用那个实现类
+    -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <!--等级拦截器 必须是这个等级才能触发-->
+        <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <Level>INFO</Level>
+            <OnMatch>ACCEPT</OnMatch>
+            <OnMismatch>DENY</OnMismatch>
+        </filter>-->
+
+        <!--等级临界值拦截 必须等于或者高于某个等级才能触发-->
+        <!--在下感觉有点废废 可以使用logger的方式控制 没必要使用拦截器-->
+        <!--<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <Level>INFO</Level>
+        </filter>-->
+
+        <!--求值过滤器 用一个布尔值返回来确定是不是拦截-->
+        <!--<filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+            <evaluator> &lt;!&ndash; 默认为 ch.qos.logback.classic.boolex.JaninoEventEvaluator &ndash;&gt;
+                &lt;!&ndash;message表示消息内容&ndash;&gt;
+                <expression>return message.contains("info");</expression>
+            </evaluator>
+            <OnMatch>ACCEPT</OnMatch>
+            <OnMismatch>DENY</OnMismatch>
+        </filter>-->
+
+        <encoder>
+            <pattern>${myPattern}</pattern>
+        </encoder>
+
+        <target>System.err</target>
+    </appender>
+
+
+    <!--普普通通 文件输出-->
+    <appender name="file" class="ch.qos.logback.core.FileAppender">
+        <!--这里有一个问题 即使appender-ref 不激活这个appender 但是只要是FileAppender的子类被激活 都会有这个这个名字的文件产生-->
+        <!--因为 它被写入了FileAppender中 子类继承就存在这个了-->
+        <File>D://softstoreFile/logs/java_logback.log</File>
+        <Append>true</Append>
+        <encoder>
+            <pattern>${myPattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!--管理文件输出-->
+    <appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <Append>true</Append>
+        <!--时间和大小区分-->
+        <RollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--%i 超过最大文件大小后 循环的数字 .gz 有这个后缀的话会归档原有的文件-->
+            <FileNamePattern>${logDir}/logFile.%d{yyyy-MM-dd}-%i.log.gz</FileNamePattern>
+            <!--文件的最大数量-->
+            <MaxFileSize>1MB</MaxFileSize>
+            <!--保持运行 才会有线程去处理这个文件 超过的文件将被删除-->
+            <MaxHistory>3</MaxHistory>
+        </RollingPolicy>
+
+        <encoder>
+            <pattern>${myPattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!--异步管理-->
+    <!--在这里引入其他的appender 然后在logger或root中引入 'asynchronous' 这样就可以了 -->
+    <appender name="asynchronous" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="rollingFile"/>
+    </appender>
+
+
+    <!--单独控制某些logger-->
+    <!--logger 和 root 本质没有区别-->
+    <logger name="cn.chen">
+        <appender-ref ref="console"/>
+        <appender-ref ref="asynchronous"/>
+    </logger>
+
+    <!--控制所有的logger-->
+    <root level="ALL">
+
+    </root>
+
+</configuration>

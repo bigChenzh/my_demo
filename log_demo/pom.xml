@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>cn.chen</groupId>
+    <artifactId>log_demo</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <!--jul jdk自带日志框架 不需要引入第三方jar get-->
+        <module>log_class_jul</module>
+        <!--jcl 日志门面技术-->
+        <module>log_interface_jcl</module>
+        <!--log4j 日志实现技术 有roll文件管理的机制-->
+        <module>log_class_log4j</module>
+        <!--slf4j 新一代门面管理技术-->
+        <module>log_interface_slf4j</module>
+        <!--logback slf4j官方发布的日志实现框架-->
+        <module>log_class_logback</module>
+        <!--log4j2-->
+        <module>log_interClass_log4j2</module>
+        <!--springboot-->
+        <module>log_springboot</module>
+    </modules>
+
+    <dependencies>
+        <!--测试框架-->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>RELEASE</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
+
+</project>
