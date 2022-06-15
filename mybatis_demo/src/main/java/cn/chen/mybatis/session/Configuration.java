@@ -9,7 +9,7 @@ import java.util.Map;
 public class Configuration {
     protected MapperRegistry mapperRegistry = new MapperRegistry(this);
 
-    protected final Map<String, MappedStatement> mappedStatements =  new HashMap<>();
+    protected final Map<String, MappedStatement> mappedStatements = new HashMap<>();
 
 
     public <T> void addMapper(Class<T> type) {

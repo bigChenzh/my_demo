@@ -145,7 +145,7 @@ public class DebugMain {
     }
 
     /**
-     * 远程调用
+     * 远程调用 启动项remote jvm debug
      */
     public static void testRemoteDebug(){
         System.out.println("请查看Controller方法 getUser");

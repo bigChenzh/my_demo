@@ -4,20 +4,52 @@ import cn.chen.mybatis.session.Configuration;
 
 import java.util.Map;
 
+/**
+ * 映射申明
+ * @author chen
+ */
 public class MappedStatement {
+    /**
+     * 配置对象
+     */
     private Configuration configuration;
+
+    /**
+     * 唯一id
+     */
     private String id;
+
+    /**
+     * sql类型 insert update
+     */
     private SqlCommandType sqlCommandType;
 
+    /**
+     * 入参类型
+     */
     private String parameterType;
+    /**
+     * 出参类型
+     */
     private String resultType;
+
+    /**
+     * sql语句
+     */
     private String sql;
+
+    /**
+     * 参数
+     */
     private Map<Integer, String> parameter;
 
     MappedStatement() {
 
     }
 
+    /**
+     * 构建 映射申明
+     */
     public static class Builder {
         private MappedStatement mappedStatement = new MappedStatement();
 

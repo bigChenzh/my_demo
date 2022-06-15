@@ -3,11 +3,16 @@ package cn.chen.mybatis;
 import cn.chen.mybatis.binding.MapperRegistry;
 import cn.chen.mybatis.dao.IUserDao;
 import cn.chen.mybatis.session.SqlSession;
+import cn.chen.mybatis.session.SqlSessionFactory;
+import cn.chen.mybatis.session.SqlSessionFactoryBuilder;
 import cn.chen.mybatis.session.defaults.DefaultSqlSessionFactory;
+import cn.hutool.core.io.resource.ResourceUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
+import java.io.FileReader;
 import java.lang.reflect.Proxy;
+import java.nio.charset.Charset;
 
 @Slf4j
 public class ApiTest {
@@ -26,13 +31,11 @@ public class ApiTest {
 
     @Test
     public void test_MapperProxyFactory() {
-        //创建注册机
-        MapperRegistry mapperRegistry = new MapperRegistry();
-        //注册信息
-        mapperRegistry.addMappers("cn.chen.mybatis.dao");
 
+        SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
         //创建SqlSession工厂
-        DefaultSqlSessionFactory sqlSessionFactory = new DefaultSqlSessionFactory(mapperRegistry);
+        SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBuilder.build(ResourceUtil.getReader("文件路径", Charset.defaultCharset()));
+        ;
         //通过工厂获取sqlSession对象
         SqlSession sqlSession = sqlSessionFactory.openSession();
         //通过sqlSession获取集体实现代理类
