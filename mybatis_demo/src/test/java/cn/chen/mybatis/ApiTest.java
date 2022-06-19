@@ -34,8 +34,7 @@ public class ApiTest {
 
         SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
         //创建SqlSession工厂
-        SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBuilder.build(ResourceUtil.getReader("文件路径", Charset.defaultCharset()));
-        ;
+        SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBuilder.build(ResourceUtil.getReader("IUserDao.xml", Charset.defaultCharset()));
         //通过工厂获取sqlSession对象
         SqlSession sqlSession = sqlSessionFactory.openSession();
         //通过sqlSession获取集体实现代理类

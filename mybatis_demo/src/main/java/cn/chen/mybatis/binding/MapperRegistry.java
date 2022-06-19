@@ -29,6 +29,7 @@ public class MapperRegistry {
      * @param <T>
      * @return
      */
+    @SuppressWarnings("unchecked")
     public <T> T getMapper(Class<T> type, SqlSession sqlSession) {
         //从注册表获取 Mapper实现类
         final MapperProxyFactory<T> mapperProxyFactory = (MapperProxyFactory<T>) knowMappers.get(type);
@@ -36,7 +37,7 @@ public class MapperRegistry {
 
         if (mapperProxyFactory == null) {
             //如果没有 报错
-            throw new RuntimeException("type" + type + "is not known to hte MapperRegistry");
+            throw new RuntimeException("type " + type + " is not known to hte MapperRegistry");
         }
 
         try {

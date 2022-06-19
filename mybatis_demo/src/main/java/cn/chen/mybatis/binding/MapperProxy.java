@@ -39,7 +39,7 @@ public class MapperProxy<T> implements InvocationHandler, Serializable {
 //            return "你被代理了！"+sqlSession.get(mapperInterface.getName()+"."+method.getName());
 //            Object invoke = method.invoke(this, args);
             //这里处理逻辑就好了 可以获取到方法名 还可以获取到参数  那不是可以为所以为了
-            return sqlSession.selectOne(method.getName(),args);
+            return sqlSession.selectOne(mapperInterface.getName()+"."+method.getName(),args);
         }
     }
 

@@ -17,6 +17,7 @@ public class MapperProxyFactory<T> {
     }
 
     //返回被代理的类
+    @SuppressWarnings("unchecked")
     public T newInstance(SqlSession sqlSession){
         MapperProxy<T> mapperProxy = new MapperProxy<T>(sqlSession,mapperInterface);
         return (T) Proxy.newProxyInstance(mapperInterface.getClassLoader(),new Class[]{mapperInterface},mapperProxy);
