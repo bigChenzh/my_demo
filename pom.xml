@@ -13,7 +13,7 @@
         <module>debug_demo</module>
         <module>log_demo</module>
         <module>mybatis_demo</module>
-        <module>jul_demo</module>
+        <module>juc_demo</module>
     </modules>
 
     <properties>
