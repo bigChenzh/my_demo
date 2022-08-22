@@ -29,7 +29,7 @@ public class CompletableFutureDemo {
 
         //callable 自定义线程池
         CompletableFuture<String> callableCfMyThread = CompletableFuture.supplyAsync(() -> {
-            int a = 100 / 0;
+            //int a = 100 / 0;
             return "我是返回值";
         }, poolExecutor);
 
@@ -50,17 +50,44 @@ public class CompletableFutureDemo {
 
 
         //thenApply 当返回之后  做这个处理 如果有异常 走不到这个方法
-        callableCfMyThread.thenApply(r->{
+        /*callableCfMyThread.thenApply(r->{
             System.out.println(r);
             return r;
-        });
+        });*/
 
         //异常之后 走这个方法 参数e是报错信息 需要重新设置返回值
-        callableCfMyThread.exceptionally(e->{
+        /*callableCfMyThread.exceptionally(e->{
             System.out.println(e.toString());
 
             return "哎呦异常了";
+        });*/
+
+        /*try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
+
+        //get join getNow
+        // 在哪里 get join getNow 只要该completableFuture 方法内部报错 都会阻断该线程
+        //System.out.println(callableCfMyThread.getNow("defaultValue")+"------>"+callableCfMyThread.join());
+        //System.out.println(callableCfMyThread.complete("123")+"------>"+callableCfMyThread.join());
+
+
+        //函数式接口 入参是上一个stage的返回值 报错会中断执行
+        callableCfMyThread.thenApply((r) -> {
+            return "123";
         });
+
+
+        //函数式接口 入参是上一个stage的返回值 报错会继续执行
+        callableCfMyThread.handle((r, e) -> {
+            return r;
+        });
+
+        //消费型接口 没有返回值但是或接受到 上一个stage的传入参数
+        callableCfMyThread.thenAccept((r)->{});
+
 
 
         poolExecutor.shutdown();
