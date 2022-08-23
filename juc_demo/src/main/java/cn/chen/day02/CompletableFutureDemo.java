@@ -7,7 +7,7 @@ import java.util.concurrent.*;
  * @date 2022/8/20 14:24
  */
 public class CompletableFutureDemo {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
         ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(3, 5, 5, TimeUnit.SECONDS, new LinkedBlockingDeque<>(10), new ThreadPoolExecutor.AbortPolicy());
 
         /*---- runnable 和 callable ----*/
@@ -86,9 +86,21 @@ public class CompletableFutureDemo {
         });
 
         //消费型接口 没有返回值但是或接受到 上一个stage的传入参数
-        callableCfMyThread.thenAccept((r)->{});
+        callableCfMyThread.thenAccept((r) -> {
+        });
+
+        // applyToEither 时间比较短的 会被返回
+        System.out.println(callableCfMyThread.applyToEither(callableCf, c -> {
+            return c;
+        }).join());
 
 
+        // thenCombine 获取两个的返回值 并返回一个新的任务值
+        System.out.println(callableCfMyThread.thenCombine(callableCf, (a, b) -> {
+            System.out.println(a);
+            System.out.println(b);
+            return "我是我";
+        }).join());
 
         poolExecutor.shutdown();
     }
