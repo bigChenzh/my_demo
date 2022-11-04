@@ -14,6 +14,7 @@
         <module>log_demo</module>
         <module>mybatis_demo</module>
         <module>juc_demo</module>
+        <module>netty_demo</module>
     </modules>
 
     <properties>
