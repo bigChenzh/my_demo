@@ -1,0 +1,9 @@
+<mapper namespace="cn.chen.day03.dao.IUserDao">
+
+    <select id="queryUserInfoById" parameterType="java.lang.Long">
+        SELECT id, userId, userHead, createTime
+        FROM user
+        where id = #{id}
+    </select>
+
+</mapper>

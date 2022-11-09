@@ -1,16 +1,13 @@
 package cn.chen.mybatis;
 
-import cn.chen.mybatis.binding.MapperRegistry;
 import cn.chen.mybatis.dao.IUserDao;
 import cn.chen.mybatis.session.SqlSession;
 import cn.chen.mybatis.session.SqlSessionFactory;
 import cn.chen.mybatis.session.SqlSessionFactoryBuilder;
-import cn.chen.mybatis.session.defaults.DefaultSqlSessionFactory;
 import cn.hutool.core.io.resource.ResourceUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
-import java.io.FileReader;
 import java.lang.reflect.Proxy;
 import java.nio.charset.Charset;
 
